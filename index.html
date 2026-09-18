@@ -87,7 +87,7 @@ function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){retur
 function err(msg){document.getElementById("app").innerHTML='<div class="err">⚠️ '+esc(msg)+"<br>刷新重试；持续失败请告诉风起。</div>"}
 function getJSON(url){return fetch(url).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status+" @ "+url);return r.json()})}
 function renderCand(item,isBest){
-  var m=/^#(\d+)\s+(-?\d+)\[(.*)\]$/.exec(String(item).trim());
+  var m=/^#(\d+)\s+(\S+)\[(.*)\]$/.exec(String(item).trim());
   var inner=m?("#<b>"+m[1]+" "+m[2]+"</b>["+esc(m[3])+"]"):esc(item);
   return "<span class='"+(isBest?"best":"")+"'>"+inner+"</span>";
 }
@@ -156,7 +156,7 @@ function paint(m,turns){
     var t=turns[b.name];if(!t)return"";
     var rows=t.turns.map(function(x){
       var c=x.candidates,best=c[x.action_index]||"";
-      var top4=c.slice(0,4).map(function(cc,i){return renderCand(cc,i===x.action_index)}).join("；");
+      var top4=c.length?c.slice(0,4).map(function(cc,i){return renderCand(cc,i===x.action_index)}).join("；"):"—";
       return "<tr class='tr-main' data-hay='"+esc((x.stage_cn+" "+x.action_desc+" "+c.join(" ")+" "+x.breakdown).toLowerCase())+"'>"+
         "<td>"+x.turn+"</td><td>"+esc(x.stage_cn)+"</td><td><b>"+esc(x.action_desc)+"</b></td><td class='cand'>"+top4+"</td></tr>";
     }).join("");
@@ -215,9 +215,11 @@ function detailToggle(ev){
   document.querySelectorAll("tr.tr-detail").forEach(function(x){x.remove()});
   tr.classList.add("tr-open");
   var d=document.createElement("tr");d.className="tr-detail";
-  d.innerHTML="<td colspan='4'><b>全部 "+t.candidates.length+" 个候选：</b><br>"+
-    t.candidates.map(function(c,i){return (i===t.action_index?"✅ ":"&nbsp;&nbsp;&nbsp;")+renderCand(c,i===t.action_index)}).join("<br>")+
-    "<br><b>选中项完整评分：</b><pre>"+esc(t.breakdown)+"</pre></td>";
+  d.innerHTML="<td colspan='4'>"+
+    (t.candidates.length?("<b>全部 "+t.candidates.length+" 个候选：</b><br>"+
+      t.candidates.map(function(c,i){return (i===t.action_index?"✅ ":"&nbsp;&nbsp;&nbsp;")+renderCand(c,i===t.action_index)}).join("<br>")):
+      "<b>本回合无择优评分明细（事件类选择）</b><br>AI 决定："+esc(t.action_desc))+
+    "</td>";
   tr.after(d);
 }
 
