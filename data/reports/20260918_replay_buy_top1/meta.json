@@ -1,9 +1,9 @@
 {
  "id": "20260918_replay_buy_top1",
- "title": "r8 最优个体 · 新口径逐回合回放（7 卡组）",
+ "title": "r8 最优个体 · 新口径逐回合回放（已废弃·评分口径已回退）",
  "date": "2026-09-18",
  "kind": "replay",
- "summary": "GA r8 冠军基因组（fitness top1=71415.6）在买技能新口径下的完整回放：7 种卡组各 1 局，全程攒 Pt、终局按净增分贪心买技能。",
+ "summary": "【已废弃】评分口径已回退为上游原版，此报告仅留作对照。",
  "method": {
   "code": "umaai-rs fork @ 9136a19（评分新口径 + 逐回合状态快照 3f1579a + GA 定稿锚点 9136a19）",
   "run": "bench_base --uma 106402 --trainer handwritten --genome-file genome_top1.toml --log --seed 1001 --runs 1；7 卡组各 1 局；状态列为每次决策时刻快照（决策前的实时值；剧本PT为当年累计，RMJ 结算后清零）",
