@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>赛马娘算法实验室 · 报告站</title>
+<style>
+:root{
+  --bg:#f7f8fa; --card:#ffffff; --line:#e5e8ee; --txt:#24292f; --sub:#6a737d;
+  --acc:#1a7f5c; --acc-soft:#e6f4ee; --warn:#b35900; --warn-soft:#fff3e0;
+  --sel:#0b6bcb; --radius:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+.wrap{max-width:1200px;margin:0 auto;padding:14px 12px 60px}
+header{padding:14px 0 8px}
+header h1{margin:0;font-size:20px}
+header p{margin:3px 0 0;color:var(--sub);font-size:13px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0;position:sticky;top:0;
+  background:var(--bg);padding:8px 0;z-index:9;border-bottom:1px solid var(--line)}
+.bar select,.bar input{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;background:#fff}
+.bar input{flex:1;min-width:150px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;margin:12px 0;box-shadow:0 1px 3px rgba(20,30,40,.04)}
+.card h2{margin:0 0 10px;font-size:17px}
+.card h3{margin:14px 0 8px;font-size:15px}
+.muted{color:var(--sub);font-size:13px}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:none;border-radius:8px;
+  padding:8px 14px;font-size:14px;cursor:pointer;text-decoration:none}
+.btn.small{padding:5px 10px;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{color:var(--sub);font-weight:600;font-size:13px;white-space:nowrap}
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.score{font-weight:700;color:var(--acc)}
+.rank{display:inline-block;background:var(--acc-soft);color:var(--acc);border-radius:6px;
+  padding:1px 8px;font-size:12px;font-weight:600}
+.tag{display:inline-block;border-radius:6px;padding:1px 8px;font-size:12px;font-weight:600;margin-left:6px}
+.tag.drift{background:var(--warn-soft);color:var(--warn)}
+.tag.same{background:#eef1f4;color:var(--sub)}
+.cand{color:var(--sub);font-size:13px}
+.cand .best{color:var(--sel);font-weight:700}
+ul.plain{margin:6px 0;padding-left:18px}
+.five{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.five span{background:#f0f3f6;border-radius:6px;padding:2px 9px;font-size:13px}
+.kv{font-size:13.5px;color:var(--sub);margin:3px 0}
+.kv b{color:var(--txt)}
+.buy-tbl td{padding:5px 9px}
+tr.tr-main{cursor:pointer}
+tr.tr-main:hover{background:#f6f9fc}
+tr.tr-open{background:var(--sel-soft)}
+tr.tr-detail td{background:#fafbfd;padding:10px 12px}
+tr.tr-detail pre{margin:4px 0 0;white-space:pre-wrap;word-break:break-all;font-size:12.5px;
+  background:#f0f3f6;border-radius:8px;padding:10px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:6px 0 2px}
+.stat{background:#f6f9f7;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat .v{font-size:20px;font-weight:700;color:var(--acc)}
+.stat .k{font-size:12px;color:var(--sub)}
+.err{background:#fdecec;color:#a33;border-radius:10px;padding:14px;margin:14px 0;font-size:14px}
+.spin{margin:60px auto;text-align:center;color:var(--sub)}
+.sec-title{display:flex;align-items:baseline;gap:10px;margin:26px 0 4px;flex-wrap:wrap}
+.sec-title h2{margin:0;font-size:18px}
+footer{color:var(--sub);font-size:12px;margin-top:30px;text-align:center}
+@media (max-width:600px){ th,td{padding:6px 7px} header h1{font-size:18px} .card{padding:12px} }
+@media print{ .bar{display:none} body{background:#fff} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🏁 赛马娘算法实验室 · 报告站</h1>
+    <p>打开即看全部明细 · 数据随仓库自动更新 · 无需下载</p>
+  </header>
+  <div class="bar">
+    <select id="reportSel"></select>
+    <select id="stageSel"><option value="all">全部阶段</option></select>
+    <input id="q" placeholder="搜索明细：技能 / 外出 / 比赛 / 买 / 休息 …">
+    <span class="muted" id="cnt"></span>
+  </div>
+  <div id="app"><div class="spin">加载中…</div></div>
+  <footer>xf8410/uma-algo-reports · 风起自动推送数据，网页自动更新</footer>
+</div>
+<script>
+"use strict";
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function err(msg){document.getElementById("app").innerHTML='<div class="err">⚠️ '+esc(msg)+"<br>刷新重试；持续失败请告诉风起。</div>"}
+function getJSON(url){return fetch(url).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status+" @ "+url);return r.json()})}
+function renderCand(item,isBest){
+  var m=/^#(\d+)\s+(-?\d+)\[(.*)\]$/.exec(String(item).trim());
+  var inner=m?("#<b>"+m[1]+" "+m[2]+"</b>["+esc(m[3])+"]"):esc(item);
+  return "<span class='"+(isBest?"best":"")+"'>"+inner+"</span>";
+}
+var IDX=null,DATA=null;
+
+function init(){
+  getJSON("data/index.json").then(function(idx){
+    IDX=idx;
+    var sel=document.getElementById("reportSel");
+    sel.innerHTML=idx.map(function(r,i){return "<option value='"+esc(r.id)+"'>"+esc(r.date+" · "+r.title)+"</option>"}).join("");
+    sel.onchange=function(){load(sel.value)};
+    var want=(location.hash.match(/^#\/report\/(.+)$/)||[])[1];
+    var first=want&&idx.some(function(r){return r.id===want})?want:idx[0].id;
+    sel.value=first;
+    load(first);
+  }).catch(function(e){err("报告列表加载失败："+e.message)});
+}
+
+function load(id){
+  document.getElementById("app").innerHTML="<div class='spin'>数据加载中…（首次约 1-2 秒）</div>";
+  var meta=getJSON("data/reports/"+id+"/meta.json");
+  var m0=IDX.filter(function(r){return r.id===id})[0]||{};
+  var turnNames=(m0.builds||[]).map(function(b){return b.name});
+  if(!turnNames.length){meta.then(function(m){turnNames=m.builds.map(function(b){return b.name});return turnAll(id,turnNames)}).then(paint,paintErr);return}
+  meta.then(function(m){return turnAll(id,turnNames).then(function(ts){paint(m,ts)})},paintErr);
+}
+function turnAll(id,names){
+  return Promise.all(names.map(function(n){return getJSON("data/reports/"+id+"/turns/"+encodeURIComponent(n)+".json")}))
+    .then(function(arr){var o={};arr.forEach(function(t){o[t.build]=t});return o});
+}
+function paintErr(e){err("数据加载失败："+e.message)}
+
+function paint(m,turns){
+  DATA={meta:m,turns:turns};
+  var byScore=m.builds.slice().sort(function(a,b){return b.score-a.score});
+  /* 总成绩排名表 */
+  var rankRows=byScore.map(function(b,i){
+    var f=b.five||{};
+    return "<tr><td>"+(i+1)+"</td><td><b>"+esc(b.name)+"</b></td><td class='score'>"+b.score+"</td><td><span class='rank'>"+esc(b.rank)+"</span></td><td>"+b.old_score+"</td><td class='muted'>速"+f.speed+" 耐"+f.stamina+" 力"+f.power+" 根"+f.guts+" 智"+f.wisdom+"</td></tr>";
+  }).join("");
+  /* 评分分解与买技能（按分降序） */
+  var cards=byScore.map(function(b){
+    var f=b.five||{};
+    var buys=(b.buys||[]).map(function(x){return "<tr><td>"+esc(x.name)+"</td><td>"+x.price+"</td><td>"+x.grade+"</td><td>"+x.gain+"</td></tr>"}).join("");
+    return "<div class='card'><h3>["+b.num+"] <b>"+esc(b.name)+"</b> — 总分 <span class='score'>"+b.score+"</span> <span class='rank'>"+esc(b.rank)+"</span>"+
+      "<span class='tag "+(b.drift==="漂移"?"drift":"same")+"'>"+(b.drift==="漂移"?"轨迹有漂移":"轨迹一致")+"</span></h3>"+
+      "<div class='statgrid'>"+
+      "<div class='stat'><div class='v'>"+b.score+"</div><div class='k'>新口径总分</div></div>"+
+      "<div class='stat'><div class='v'>"+b.old_score+"</div><div class='k'>旧口径对照</div></div>"+
+      "<div class='stat'><div class='v'>"+((m.turn_counts||{})[b.name]||"—")+"</div><div class='k'>决策回合数</div></div></div>"+
+      "<div class='five'><span>速 "+f.speed+"</span><span>耐 "+f.stamina+"</span><span>力 "+f.power+"</span><span>根 "+f.guts+"</span><span>智 "+f.wisdom+"</span></div>"+
+      "<div class='kv'>评分分解：<b>"+esc(b.decompose)+"</b></div>"+
+      "<div class='kv'>Pt 账目：<b>"+esc(b.pt_account)+"</b></div>"+
+      (buys?"<div class='kv'>终局买入技能：</div><div class='tblwrap'><table class='buy-tbl'><tr><th>技能</th><th>价格</th><th>Grade</th><th>净增分</th></tr>"+buys+"</table></div>":"<div class='kv'>终局未买入技能</div>")+
+      "</div>";
+  }).join("");
+  /* 逐回合明细：全部铺开 */
+  var stages=[];
+  Object.keys(turns).forEach(function(k){turns[k].turns.forEach(function(t){if(stages.indexOf(t.stage)<0)stages.push(t.stage)})});
+  var stageSel=document.getElementById("stageSel");
+  var cur=stageSel.value||"all";
+  stageSel.innerHTML="<option value='all'>全部阶段</option>"+stages.map(function(s){return "<option value='"+esc(s)+"'>"+esc(t2cn(s))+"</option>"}).join("");
+  stageSel.value=stages.indexOf(cur)>=0||cur==="all"?cur:"all";
+
+  var sections=byScore.map(function(b){
+    var t=turns[b.name];if(!t)return"";
+    var rows=t.turns.map(function(x){
+      var c=x.candidates,best=c[x.action_index]||"";
+      var top4=c.slice(0,4).map(function(cc,i){return renderCand(cc,i===x.action_index)}).join("；");
+      return "<tr class='tr-main' data-hay='"+esc((x.stage_cn+" "+x.action_desc+" "+c.join(" ")+" "+x.breakdown).toLowerCase())+"'>"+
+        "<td>"+x.turn+"</td><td>"+esc(x.stage_cn)+"</td><td><b>"+esc(x.action_desc)+"</b></td><td class='cand'>"+top4+"</td></tr>";
+    }).join("");
+    return "<div class='sec-title'><h2>"+esc(b.name)+"</h2><span class='muted'>第 "+byScore.indexOf(b)+1+" 名 · "+b.score+" 分 · "+t.total+" 回合</span></div>"+
+      "<div class='card' style='padding:8px 10px'><div class='tblwrap'><table data-build='"+esc(b.name)+"'>"+
+      "<thead><tr><th>回合</th><th>阶段</th><th>AI 决定</th><th>候选择优（前 4）</th></tr></thead><tbody>"+rows+"</tbody></table></div></div>";
+  }).join("");
+
+  document.getElementById("app").innerHTML=
+    "<div class='card'><h2>"+esc(m.title)+"</h2><div class='muted'>"+esc(m.date)+" · 7 卡组新口径均分 <b class='score'>"+m.mean+"</b>（总分从高到低排名）</div>"+
+    "<p>"+esc(m.summary)+"</p>"+
+    "<div class='tblwrap'><table><thead><tr><th>排名</th><th>卡组</th><th>新口径总分</th><th>评价</th><th>旧口径对照</th><th>五维</th></tr></thead><tbody>"+rankRows+"</tbody></table></div></div>"+
+    "<div class='sec-title'><h2>跑法与口径</h2></div>"+
+    "<div class='card'><div class='kv'>代码：<b>"+esc(m.method.code)+"</b></div>"+
+    "<div class='kv'>命令：<b>"+esc(m.method.run)+"</b></div>"+
+    "<ul class='plain'>"+m.method.formula.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+"</ul>"+
+    "<div class='muted'>明细里每个选项的数字 = AI 给它打的分（越高越好）。点任意回合行可展开全部候选与完整评分。</div></div>"+
+    "<div class='sec-title'><h2>评分分解与终局买技能</h2><span class='muted'>按总分从高到低</span></div>"+cards+
+    "<div class='sec-title'><h2>逐回合育成明细</h2><span class='muted'>7 卡组全量铺开，共 "+Object.keys(turns).reduce(function(s,k){return s+turns[k].total},0)+" 个回合</span></div>"+sections;
+
+  document.getElementById("stageSel").onchange=applyFilter;
+  document.getElementById("q").oninput=applyFilter;
+  document.getElementById("app").addEventListener("click",detailToggle);
+  applyFilter();
+}
+
+function t2cn(s){return({Train:"训练",Event:"事件",RamenSelect:"吃面选择",RegionSelect:"地区选择",SpecialSelect:"特殊选择",SuperRamenSelect:"高级吃面选择",Race:"比赛",Rest:"休息",Outing:"外出"})[s]||s}
+
+function applyFilter(){
+  if(!DATA)return;
+  var st=document.getElementById("stageSel").value;
+  var q=document.getElementById("q").value.trim().toLowerCase();
+  var show=0,total=0;
+  document.querySelectorAll("#app table[data-build] tbody tr.tr-main").forEach(function(tr){
+    total++;
+    var okStage=st==="all"||tr.children[1].textContent===t2cn(st);
+    var okQ=!q||tr.getAttribute("data-hay").indexOf(q)>=0;
+    var vis=okStage&&okQ;
+    tr.style.display=vis?"":"none";
+    if(vis)show++;
+    var d=tr.nextSibling;if(d&&d.className==="tr-detail")d.style.display=vis?"":"none";
+  });
+  document.getElementById("cnt").textContent="显示 "+show+" / "+total+" 回合";
+}
+
+function detailToggle(ev){
+  var tr=ev.target.closest?ev.target.closest("tr.tr-main"):null;
+  if(!tr||!DATA)return;
+  var build=tr.closest("table").getAttribute("data-build");
+  var turn=parseInt(tr.children[0].textContent,10);
+  var t=DATA.turns[build].turns.filter(function(x){return x.turn===turn})[0];
+  if(!t)return;
+  var next=tr.nextSibling;
+  if(next&&next.className==="tr-detail"){next.remove();tr.classList.remove("tr-open");return}
+  document.querySelectorAll("tr.tr-open").forEach(function(x){x.classList.remove("tr-open")});
+  document.querySelectorAll("tr.tr-detail").forEach(function(x){x.remove()});
+  tr.classList.add("tr-open");
+  var d=document.createElement("tr");d.className="tr-detail";
+  d.innerHTML="<td colspan='4'><b>全部 "+t.candidates.length+" 个候选：</b><br>"+
+    t.candidates.map(function(c,i){return (i===t.action_index?"✅ ":"&nbsp;&nbsp;&nbsp;")+renderCand(c,i===t.action_index)}).join("<br>")+
+    "<br><b>选中项完整评分：</b><pre>"+esc(t.breakdown)+"</pre></td>";
+  tr.after(d);
+}
+
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>

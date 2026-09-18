@@ -1,0 +1,250 @@
+{
+ "id": "20260918_replay_buy_top1",
+ "title": "r8 最优个体 · 新口径逐回合回放（7 卡组）",
+ "date": "2026-09-18",
+ "kind": "replay",
+ "summary": "GA r8 冠军基因组（fitness top1=71415.6）在买技能新口径下的完整回放：7 种卡组各 1 局，全程攒 Pt、终局按净增分贪心买技能。",
+ "method": {
+  "code": "umaai-rs @ 62a797c（含评分新口径 f1ac423 + 评分解释层 8e4159e）",
+  "run": "bench_base --uma 106402 --trainer handwritten --genome-file genome_top1.toml --seed 1001 --runs 1；7 卡组各 1 局",
+  "formula": [
+   "总分 = URA属性分 + 固有技能510 + Σ买到技能Grade + 结余总PT×2",
+   "结余总PT = skill_pt + hints×6.5；1 技能点 = 2 评价点",
+   "育成全程攒 Pt 不学技能；终局按净增分(Grade−价格×2)>0 贪心买入（deck-hint 池含折扣）"
+  ]
+ },
+ "mean": 89818.3,
+ "builds": [
+  {
+   "num": 1,
+   "name": "speed",
+   "score": 86294,
+   "rank": "LG16",
+   "old_score": 66884,
+   "five": {
+    "speed": 3337,
+    "stamina": 2199,
+    "power": 1767,
+    "guts": 1395,
+    "wisdom": 1519
+   },
+   "decompose": "属性分 64881 + 技能分 727(固有510+买入217) + 结余PT分 20686(总PT 10343×2) = 86294",
+   "pt_account": "育成攒得后结余 skill_pt=8731，hints=248(折算 1612 Pt)；终局买入 1 个技能，花费 108 Pt，加 217 分",
+   "drift": "一致",
+   "buys": [
+    {
+     "name": "打头阵",
+     "price": 108,
+     "grade": 217,
+     "gain": 1
+    }
+   ]
+  },
+  {
+   "num": 2,
+   "name": "stamina",
+   "score": 90613,
+   "rank": "LG23",
+   "old_score": 67129,
+   "five": {
+    "speed": 3313,
+    "stamina": 2400,
+    "power": 1144,
+    "guts": 1540,
+    "wisdom": 1978
+   },
+   "decompose": "属性分 70402 + 技能分 727(固有510+买入217) + 结余PT分 19484(总PT 9742×2) = 90613",
+   "pt_account": "育成攒得后结余 skill_pt=8410，hints=205(折算 1332 Pt)；终局买入 1 个技能，花费 90 Pt，加 217 分",
+   "drift": "一致",
+   "buys": [
+    {
+     "name": "长距离直线○",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    }
+   ]
+  },
+  {
+   "num": 3,
+   "name": "power_wisdom",
+   "score": 88393,
+   "rank": "LG19",
+   "old_score": 56002,
+   "five": {
+    "speed": 2175,
+    "stamina": 1766,
+    "power": 2200,
+    "guts": 626,
+    "wisdom": 2445
+   },
+   "decompose": "属性分 69924 + 技能分 1595(固有510+买入1085) + 结余PT分 16874(总PT 8437×2) = 88393",
+   "pt_account": "育成攒得后结余 skill_pt=7235，hints=185(折算 1202 Pt)；终局买入 5 个技能，花费 504 Pt，加 1085 分",
+   "drift": "一致",
+   "buys": [
+    {
+     "name": "打好基础",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    },
+    {
+     "name": "翘尾巴",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    },
+    {
+     "name": "直滑降",
+     "price": 108,
+     "grade": 217,
+     "gain": 1
+    },
+    {
+     "name": "俯冲",
+     "price": 108,
+     "grade": 217,
+     "gain": 1
+    },
+    {
+     "name": "趁势而上",
+     "price": 108,
+     "grade": 217,
+     "gain": 1
+    }
+   ]
+  },
+  {
+   "num": 4,
+   "name": "speed_wisdom",
+   "score": 98286,
+   "rank": "LF11",
+   "old_score": 70758,
+   "five": {
+    "speed": 3337,
+    "stamina": 2400,
+    "power": 1154,
+    "guts": 1381,
+    "wisdom": 2422
+   },
+   "decompose": "属性分 77142 + 技能分 944(固有510+买入434) + 结余PT分 20200(总PT 10100×2) = 98286",
+   "pt_account": "育成攒得后结余 skill_pt=8677，hints=219(折算 1423 Pt)；终局买入 2 个技能，花费 180 Pt，加 434 分",
+   "drift": "漂移",
+   "buys": [
+    {
+     "name": "打好基础",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    },
+    {
+     "name": "翘尾巴",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    }
+   ]
+  },
+  {
+   "num": 5,
+   "name": "wisdom",
+   "score": 87417,
+   "rank": "LG18",
+   "old_score": 62707,
+   "five": {
+    "speed": 3161,
+    "stamina": 2064,
+    "power": 910,
+    "guts": 1172,
+    "wisdom": 2445
+   },
+   "decompose": "属性分 68060 + 技能分 1161(固有510+买入651) + 结余PT分 18196(总PT 9098×2) = 87417",
+   "pt_account": "育成攒得后结余 skill_pt=7850，hints=192(折算 1248 Pt)；终局买入 3 个技能，花费 288 Pt，加 651 分",
+   "drift": "漂移",
+   "buys": [
+    {
+     "name": "打好基础",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    },
+    {
+     "name": "翘尾巴",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    },
+    {
+     "name": "俯冲",
+     "price": 108,
+     "grade": 217,
+     "gain": 1
+    }
+   ]
+  },
+  {
+   "num": 6,
+   "name": "sta0_wis2",
+   "score": 85846,
+   "rank": "LG15",
+   "old_score": 61184,
+   "five": {
+    "speed": 3050,
+    "stamina": 924,
+    "power": 1744,
+    "guts": 1585,
+    "wisdom": 2445
+   },
+   "decompose": "属性分 66857 + 技能分 1161(固有510+买入651) + 结余PT分 17828(总PT 8914×2) = 85846",
+   "pt_account": "育成攒得后结余 skill_pt=7718，hints=184(折算 1196 Pt)；终局买入 3 个技能，花费 270 Pt，加 651 分",
+   "drift": "漂移",
+   "buys": [
+    {
+     "name": "英里弯道○",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    },
+    {
+     "name": "打好基础",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    },
+    {
+     "name": "翘尾巴",
+     "price": 90,
+     "grade": 217,
+     "gain": 37
+    }
+   ]
+  },
+  {
+   "num": 7,
+   "name": "spd2_gut0",
+   "score": 91879,
+   "rank": "LF",
+   "old_score": 68080,
+   "five": {
+    "speed": 3309,
+    "stamina": 2400,
+    "power": 1970,
+    "guts": 1197,
+    "wisdom": 1594
+   },
+   "decompose": "属性分 71297 + 技能分 510(固有510+买入0) + 结余PT分 20072(总PT 10036×2) = 91879",
+   "pt_account": "育成攒得后结余 skill_pt=8697，hints=206(折算 1339 Pt)；终局买入 0 个技能，花费 0 Pt，加 0 分",
+   "drift": "漂移",
+   "buys": []
+  }
+ ],
+ "turn_counts": {
+  "speed": 196,
+  "stamina": 199,
+  "power_wisdom": 203,
+  "speed_wisdom": 197,
+  "wisdom": 204,
+  "sta0_wis2": 204,
+  "spd2_gut0": 199
+ }
+}

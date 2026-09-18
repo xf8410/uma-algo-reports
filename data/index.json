@@ -1,0 +1,47 @@
+[
+ {
+  "id": "20260918_replay_buy_top1",
+  "title": "r8 最优个体 · 新口径逐回合回放（7 卡组）",
+  "date": "2026-09-18",
+  "summary": "GA r8 冠军基因组（fitness top1=71415.6）在买技能新口径下的完整回放：7 种卡组各 1 局，全程攒 Pt、终局按净增分贪心买技能。",
+  "mean": 89818.3,
+  "top": 98286,
+  "builds": [
+   {
+    "name": "speed",
+    "score": 86294,
+    "rank": "LG16"
+   },
+   {
+    "name": "stamina",
+    "score": 90613,
+    "rank": "LG23"
+   },
+   {
+    "name": "power_wisdom",
+    "score": 88393,
+    "rank": "LG19"
+   },
+   {
+    "name": "speed_wisdom",
+    "score": 98286,
+    "rank": "LF11"
+   },
+   {
+    "name": "wisdom",
+    "score": 87417,
+    "rank": "LG18"
+   },
+   {
+    "name": "sta0_wis2",
+    "score": 85846,
+    "rank": "LG15"
+   },
+   {
+    "name": "spd2_gut0",
+    "score": 91879,
+    "rank": "LF"
+   }
+  ]
+ }
+]
