@@ -1,0 +1,106 @@
+# ============================================================
+# 完整策略权重（76 基因全展开）——拿走即可复现，无需另查 preset
+# ============================================================
+# 个体: R8 冠军（r8 #65 赤心的驯鹿小姐 目白善信 uma_id=106402）
+# 实测: GA fitness=71415.6（精评 60 局 seed=42 均值）| holdout=71328.9（seed=43）
+# 配卡: 见 reports 仓 data/r8_champion_cards.json（速2耐1智2 五张 SSR, indices=[0,2,47,4,2]）
+#
+# 【评估种子】
+#   GA 精评 60 局: base_seed=42    GA holdout 40 局: holdout_seed=43
+#   bench_base 单局重放: --seed 1001（确定性, 逐位可复现）
+# 【评估协议】
+#   fitness = λ_race=800, 精评 60 局(seed42)均值; 初筛 3build×20局; holdout 40局(seed43)
+# 【环境】
+#   剧本: 小仓拉面(ramen, 评估器内置) | 友人卡: 303054
+#   继承因子: blue_count=[15,0,0,0,3] extra_count=[10,10,20,20,20,40]
+#   评估器版本: R8 当年=7c983a0, 单局重放锚=8e9f7a5, 当前 master 定标实验进行中
+# 【复现命令】(工作目录=umaai-rs 仓根, gamedata/umaDB.json 用 lab 仓 data/ 版)
+#   cargo build --release --bin bench_base
+#   ./target/release/bench_base --uma <马娘id> --trainer handwritten --genome-file <本文件> --log --runs 1 --seed 1001
+#   (R8 冠军 --uma 106402; 当年 7 卡组锚: speed_wisdom=69642 / spd2_gut0=69190 / stamina=67129 / speed=66884 / sta0_wis2=62836 / wisdom=62025 / power_wisdom=56002)
+#
+# 标注说明: [搜索值]=冠军搜索出的数值 | [preset]=未搜索取 preset 默认(与覆盖层缺失等价)
+#           [runtime]=preset 状态不可用单一数值表示, 保持缺失即 preset 行为
+# ============================================================
+
+[policy]
+vital_rest = 37   # [搜索值]
+vital_rest_eating_y1 = 37   # [搜索值]
+vital_rest_eating_y2 = 37   # [搜索值]
+vital_rest_eating_y3 = 9   # [搜索值]
+wisdom_vital_floor = 36   # [搜索值-runtime类]
+motivation_outing = 3   # [preset]
+status_rate = 1   # [搜索值]
+pt_rate_y1 = 16   # [搜索值]
+pt_rate_y2 = 85.11441   # [搜索值]
+pt_rate_y3 = 64   # [搜索值]
+pt_tradeoff = 44.55522   # [搜索值]
+pt_tradeoff_shining = 21.922499   # [搜索值-runtime类]
+pt_tradeoff_super = 29.123894   # [搜索值]
+cap_discount_weight = 1.2113717   # [搜索值]
+failure_penalty = 60   # [搜索值]
+effective_ramen_failure = false   # [搜索值]
+shining_bonus = 60   # [搜索值]
+train_vital_value = 1.6914387   # [搜索值]
+rest_base = 45.722157   # [搜索值]
+rest_vital_value = 2.5   # [preset]
+rest_target_vital = 55   # [搜索值]
+race_panel_discount = 0.3   # [preset]
+race_free_urgency_weight = 2919.167   # [搜索值]
+race_gate_slack = 1   # [搜索值]
+outing_base = 15   # [preset]
+friend_outing_bonus = 61.314613   # [搜索值]
+ramen_pt_weight = 4.628715   # [搜索值]
+ramen_effect_weight = 3   # [preset]
+ramen_special_cost = 6.746099   # [搜索值]
+ramen_stock_cost = 0.4   # [搜索值]
+region_xunlian_weight = 14.992668   # [搜索值]
+region_pt_weight = 30   # [preset]
+region_hint_weight = 20.238716   # [搜索值]
+region_youqing_weight = 0   # [搜索值]
+region_weak_cover_weight = 0   # [preset]
+event_vital_weight = 2.2   # [preset]
+event_motivation_weight = 32.12148   # [搜索值]
+event_bad_flag_penalty = 300   # [preset]
+
+[local]
+early_bond_value = 6.8448305   # [搜索值]
+hint_bonus = 6   # [preset]
+first_friend_click_value = 75   # [preset]
+low_friend_bond_value = 8.487566   # [搜索值]
+active_friend_value = 8   # [preset]
+feeling_overflow_threshold = 8   # [preset]
+overflow_value = 1.3544745   # [搜索值]
+max_base_score_sacrifice = 384.53598   # [搜索值]
+status_reserve_max = 40   # [搜索值]
+dynamic_status_balance = false   # [搜索值]
+status_gap_strength = 0.14053416   # [搜索值]
+status_overflow_strength = 0.5   # [preset]
+dynamic_vital = true   # [preset]
+probabilistic_hint = false   # [搜索值]
+expected_fail = false   # [搜索值]
+checkpoint_scale = 0   # [preset]
+rmj_cross_bonus = 0   # [preset]
+great_cross_bonus = 0   # [preset]
+ramen_window_weight = 0.08024326   # [搜索值]
+ramen_train_coupling_weight = 3.0614443   # [搜索值]
+ramen_weak_train_boost = 1.3334891   # [搜索值]
+friend_hidden_starve_weight = 506.93158   # [搜索值]
+friend_future_hidden_weight = 0   # [preset]
+friend_proactive_weight = 213.04054   # [搜索值]
+eat_guarantee_weight = 0.5240228   # [搜索值]
+cook2_stock_weight = 40   # [preset]
+eat_requires_training = true   # [preset]
+eat_requires_covered_train = true   # [搜索值]
+y3_pre_train_vital_target = 25   # [preset]
+y3_post_train_vital_target = 23   # [搜索值]
+y3_vital_shortfall_weight = 0.08438793   # [搜索值]
+y3_post_train_hard_floor = 3   # [搜索值]
+y3_recovery_horizon = false   # [搜索值]
+friend_outing_replaces_rest = true   # [搜索值]
+friend_outing3_recovery_vital = 0   # [搜索值]
+friend_outing_cumulative_caps_y1 = null   # [搜索值]
+friend_outing_cumulative_caps_y2 = null   # [搜索值]
+friend_outing_cumulative_caps_y3 = 5   # [搜索值]
+dynamic_special_targets = true   # [搜索值]
+
