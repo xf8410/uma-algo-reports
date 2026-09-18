@@ -1,5 +1,50 @@
 [
  {
+  "id": "20260918_replay_legacy_top1",
+  "title": "r8 最优个体 · 上游原版评分逐回合回放（7 卡组）",
+  "date": "2026-09-18",
+  "summary": "评分已按用户令回退为上游原版口径：属性分（five_status_final_score 3399 档表）+ 固有 510 + (剩余技能点+hint×6.5)×2，全程攒 Pt 不学技能。GA r8 冠军基因组回放 7 种卡组各 1 局，含逐回合状态快照；分数与 r8 原版回放逐位一致（同尺验证）。",
+  "mean": 64677.7,
+  "top": 70758,
+  "builds": [
+   {
+    "name": "speed",
+    "score": 66884,
+    "rank": "US3"
+   },
+   {
+    "name": "stamina",
+    "score": 67129,
+    "rank": "US3"
+   },
+   {
+    "name": "power_wisdom",
+    "score": 56002,
+    "rank": "UA1"
+   },
+   {
+    "name": "speed_wisdom",
+    "score": 70758,
+    "rank": "US6"
+   },
+   {
+    "name": "wisdom",
+    "score": 62707,
+    "rank": "UA9"
+   },
+   {
+    "name": "sta0_wis2",
+    "score": 61184,
+    "rank": "UA7"
+   },
+   {
+    "name": "spd2_gut0",
+    "score": 68080,
+    "rank": "US4"
+   }
+  ]
+ },
+ {
   "id": "20260918_replay_buy_top1",
   "title": "r8 最优个体 · 新口径逐回合回放（7 卡组）",
   "date": "2026-09-18",
