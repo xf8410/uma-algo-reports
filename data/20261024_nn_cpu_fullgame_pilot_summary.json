@@ -1,0 +1,140 @@
+{
+  "run": {
+    "repo": "xf8410/umaai-rs",
+    "workflow": "nn-cpu-eval",
+    "run_id": 39999322276,
+    "commit": "085aa56",
+    "trigger": "push",
+    "search_n": 128,
+    "seeds": "61444-61463 per plan",
+    "plan_indices": [
+      0,
+      85,
+      170,
+      220,
+      305,
+      390,
+      475
+    ]
+  },
+  "pairs": 140,
+  "pooled": {
+    "nn_mean": 52788.2,
+    "hw_mean": 68116.0,
+    "diff_mean": -15327.8,
+    "diff_rel_pct": -22.5,
+    "diff_pt_mean": -18031.2,
+    "t": -71.86,
+    "p": 8.39332705171111e-112,
+    "wilcoxon_p": 1.0114229849283589e-24,
+    "ci95": [
+      -15746,
+      -14910
+    ],
+    "nn_wins": 0,
+    "min_diff": -21051.0,
+    "max_diff": -9109.0,
+    "nn_wall_total_h": 14.72,
+    "hw_wall_total_h": 0.54
+  },
+  "per_plan": [
+    {
+      "plan_index": 0,
+      "uma": "[灰姑娘]小栗帽 (100603)",
+      "n": 20,
+      "nn_mean": 52633.1,
+      "hw_mean": 66980.4,
+      "diff_mean": -14347.4,
+      "diff_rel_pct": -21.42,
+      "diff_pt_mean": -17117.5,
+      "t": -26.72,
+      "p": 1.5548306280228011e-16,
+      "nn_wall_s": 224.2,
+      "hw_wall_s": 10.3
+    },
+    {
+      "plan_index": 85,
+      "uma": "[Rock in☆MewMeow]摩耶重炮 (102403)",
+      "n": 20,
+      "nn_mean": 53981.9,
+      "hw_mean": 68692.2,
+      "diff_mean": -14710.4,
+      "diff_rel_pct": -21.41,
+      "diff_pt_mean": -17385.5,
+      "t": -27.85,
+      "p": 7.198321723860558e-17,
+      "nn_wall_s": 423.2,
+      "hw_wall_s": 12.0
+    },
+    {
+      "plan_index": 170,
+      "uma": "[The Changer]杏目 (112901)",
+      "n": 20,
+      "nn_mean": 53177.4,
+      "hw_mean": 69155.9,
+      "diff_mean": -15978.4,
+      "diff_rel_pct": -23.1,
+      "diff_pt_mean": -18856.0,
+      "t": -34.3,
+      "p": 1.4810223700418552e-18,
+      "nn_wall_s": 391.2,
+      "hw_wall_s": 18.0
+    },
+    {
+      "plan_index": 220,
+      "uma": "[快乐小音符]菱钻奇宝 (110602)",
+      "n": 20,
+      "nn_mean": 53269.2,
+      "hw_mean": 68584.9,
+      "diff_mean": -15315.7,
+      "diff_rel_pct": -22.33,
+      "diff_pt_mean": -18174.5,
+      "t": -23.47,
+      "p": 1.7121565268569224e-15,
+      "nn_wall_s": 378.4,
+      "hw_wall_s": 13.8
+    },
+    {
+      "plan_index": 305,
+      "uma": "[保持微笑・我的道路！]放声欢呼 (113101)",
+      "n": 20,
+      "nn_mean": 52886.3,
+      "hw_mean": 68023.1,
+      "diff_mean": -15136.8,
+      "diff_rel_pct": -22.25,
+      "diff_pt_mean": -17736.6,
+      "t": -21.19,
+      "p": 1.1078521007294276e-14,
+      "nn_wall_s": 392.0,
+      "hw_wall_s": 12.2
+    },
+    {
+      "plan_index": 390,
+      "uma": "[不融化的糖果]真弓快车 (108702)",
+      "n": 20,
+      "nn_mean": 52074.1,
+      "hw_mean": 68099.2,
+      "diff_mean": -16025.1,
+      "diff_rel_pct": -23.53,
+      "diff_pt_mean": -18730.2,
+      "t": -32.05,
+      "p": 5.276611671421548e-18,
+      "nn_wall_s": 399.9,
+      "hw_wall_s": 13.5
+    },
+    {
+      "plan_index": 475,
+      "uma": "[无上喜悦]东海帝王 (100301)",
+      "n": 20,
+      "nn_mean": 51495.3,
+      "hw_mean": 67276.2,
+      "diff_mean": -15781.0,
+      "diff_rel_pct": -23.46,
+      "diff_pt_mean": -18218.5,
+      "t": -33.01,
+      "p": 3.0397345196875282e-18,
+      "nn_wall_s": 440.2,
+      "hw_wall_s": 17.1
+    }
+  ]
+}
